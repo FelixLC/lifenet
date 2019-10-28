@@ -4,9 +4,9 @@ learned with a simple linear model is XOR
 """
 import numpy as np
 
-from joelnet.train import train
-from joelnet.nn import NeuralNet
-from joelnet.layers import Linear, Tanh
+from lifenet.train import train
+from lifenet.nn import NeuralNet
+from lifenet.layers import Linear, Tanh
 
 inputs = np.array([
     [0, 0],
