@@ -1,3 +1,9 @@
+# Lifenet: Building a deep learning library from scratch
+
+Step by step livecoding of a deep learning library.
+Forked from github.com/joelgrus/joelnet.git with some additional comments
+and a step by step commit workflow
+
 # Livecoding Madness: Let's Build a Deep Learning Library
 
 [video](https://www.youtube.com/watch?v=o64FV-ez6Gw) of the livecoding.
