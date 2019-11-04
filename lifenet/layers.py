@@ -58,15 +58,17 @@ class Linear(Layer):
 
     def backward(self, grad: Tensor) -> Tensor:
         """
-        if y = f(x) and x = a * b + c
-        then dy/da = f'(x) * b
-        and dy/db = f'(x) * a
-        and dy/dc = f'(x)
+        if y = g(z(x)) and z(x) = w @ x + b
 
-        if y = f(x) and x = a @ b + c
-        then dy/da = f'(x) @ b.T
-        and dy/db = a.T @ f'(x)
-        and dy/dc = f'(x)
+        with:
+        - g our loss function, or the gradient from next layer
+        - z(x) our inputs
+        - w & b our weights for current layer
+
+        then:
+        - dy/dw = g'(x) * x
+        - dy/dx = g'(x) * w
+        - dy/db = g'(x)
         """
         self.grads["b"] = np.sum(grad, axis=0)
         self.grads["w"] = self.inputs.T @ grad
@@ -93,20 +95,36 @@ class Activation(Layer):
 
     def backward(self, grad: Tensor) -> Tensor:
         """
-        if y = f(x) and x = g(z)
-        then dy/dz = f'(x) * g'(z)
+        if y = g(a(x))
+
+        with:
+         - g our loss function, or the gradient from next layer
+         - a our activation function, which depends on our inputs
+
+        then:
+        - dy/da = g'(x) * a'(x)
         """
         return self.f_prime(self.inputs) * grad
 
 
 def tanh(x: Tensor) -> Tensor:
+    """
+    Hyperbolic Tan takes any number and ouputs a number between -1 & 1
+    [-∞; +∞] => [-1; 1]
+    """
     return np.tanh(x)
 
 def tanh_prime(x: Tensor) -> Tensor:
+    """
+    Hyperbolic Tan Derived is 1 - tan²(x)
+    """
     y = tanh(x)
     return 1 - y ** 2
 
 
 class Tanh(Activation):
+    """
+    Tanh activation is a common activation function
+    """
     def __init__(self):
         super().__init__(tanh, tanh_prime)
