@@ -8,8 +8,10 @@ from lifenet.tensor import Tensor
 
 
 class Loss:
-    """Our loss class will be able to calculate the actual loss: a function of the prediction vs the actual
-    and its derivative with respect to the net weights in order to try and change the weights to diminish the losss"""
+    """
+    Our loss class will be able to calculate the actual loss: a function of the prediction vs the actual
+    and its derivative with respect to the net weights in order to try and change the weights to diminish the loss
+    """
 
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
         raise NotImplementedError
@@ -24,5 +26,11 @@ class MSE(Loss):
     just going to do total squared error
     """
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
+        """
+        Calculate loss value from the difference between prediction and actual
+        """
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
+        """
+        Calculate the partial derivatives of or losses for each input of our batch
+        """

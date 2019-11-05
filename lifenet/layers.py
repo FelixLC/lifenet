@@ -66,7 +66,9 @@ class Linear(Layer):
         - dy/dx = g'(x) * w
         - dy/db = g'(x)
         """
-
+        self.grads["b"] = np.sum(grad, axis=0)
+        self.grads["w"] = self.inputs.T @ grad
+        return grad @ self.params["w"].T
 
 F = Callable[[Tensor], Tensor]
 
@@ -96,7 +98,7 @@ class Activation(Layer):
         then:
         - dy/da = g'(x) * a'(x)
         """
-
+        return self.f_prime(self.inputs) * grad
 
 def tanh(x: Tensor) -> Tensor:
     """
