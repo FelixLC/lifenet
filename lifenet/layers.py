@@ -46,15 +46,11 @@ class Linear(Layer):
         # inputs will be (batch_size, input_size)
         # outputs will be (batch_size, output_size)
         super().__init__()
-        self.params["w"] = np.random.randn(input_size, output_size)
-        self.params["b"] = np.random.randn(output_size)
 
     def forward(self, inputs: Tensor) -> Tensor:
         """
         outputs = inputs @ w + b
         """
-        self.inputs = inputs
-        return inputs @ self.params["w"] + self.params["b"]
 
     def backward(self, grad: Tensor) -> Tensor:
         """
@@ -70,9 +66,6 @@ class Linear(Layer):
         - dy/dx = g'(x) * w
         - dy/db = g'(x)
         """
-        self.grads["b"] = np.sum(grad, axis=0)
-        self.grads["w"] = self.inputs.T @ grad
-        return grad @ self.params["w"].T
 
 
 F = Callable[[Tensor], Tensor]
@@ -90,8 +83,7 @@ class Activation(Layer):
         self.f_prime = f_prime
 
     def forward(self, inputs: Tensor) -> Tensor:
-        self.inputs = inputs
-        return self.f(inputs)
+
 
     def backward(self, grad: Tensor) -> Tensor:
         """
@@ -104,7 +96,6 @@ class Activation(Layer):
         then:
         - dy/da = g'(x) * a'(x)
         """
-        return self.f_prime(self.inputs) * grad
 
 
 def tanh(x: Tensor) -> Tensor:
@@ -118,8 +109,7 @@ def tanh_prime(x: Tensor) -> Tensor:
     """
     Hyperbolic Tan Derived is 1 - tan²(x)
     """
-    y = tanh(x)
-    return 1 - y ** 2
+
 
 
 class Tanh(Activation):

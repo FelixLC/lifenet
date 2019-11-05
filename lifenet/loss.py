@@ -24,7 +24,5 @@ class MSE(Loss):
     just going to do total squared error
     """
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
-        return np.sum((predicted - actual) ** 2)
 
     def grad(self, predicted: Tensor, actual: Tensor) -> Tensor:
-        return 2 * (predicted - actual)

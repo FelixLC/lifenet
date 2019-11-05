@@ -27,5 +27,4 @@ class SGD(Optimizer):
     def step(self, net: NeuralNet) -> None:
         """Gradient has been propagated back in the neural net. For each param in the net,
         take a `step` in the direction of the gradient to update the param"""
-        for param, grad in net.params_and_grads():
-            param -= self.lr * grad
+

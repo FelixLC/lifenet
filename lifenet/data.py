@@ -27,12 +27,3 @@ class BatchIterator:
         """Create an iterator which will slice our inputs and targets by batch.
         For each iteration, yield a batch (the next slice in the origin table (next_inputs, next_targets)
         """
-        starts = np.arange(0, len(inputs), self.batch_size)
-        if self.shuffle:
-            np.random.shuffle(starts)
-
-        for start in starts:
-            end = start + self.batch_size
-            batch_inputs = inputs[start:end]
-            batch_targets = targets[start:end]
-            yield Batch(batch_inputs, batch_targets)
