@@ -35,4 +35,6 @@ def train(net: NeuralNet,
             grad = loss.grad(predicted, batch.targets)
             net.backward(grad)
             optimizer.step(net)
-        print(epoch, epoch_loss)
+
+        if epoch % 10 == 0:
+            print(f"Epoch {epoch} - Loss {epoch_loss}")
