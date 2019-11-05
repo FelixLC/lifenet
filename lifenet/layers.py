@@ -7,7 +7,7 @@ For example, a neural net might look like
 inputs -> Linear Layer -> Tanh Layer -> Linear Layer -> output
 """
 
-from typing import Dict, Callable
+from typing import Callable, Dict
 
 import numpy as np
 
@@ -102,7 +102,7 @@ class Activation(Layer):
          - a our activation function, which depends on our inputs
 
         then:
-        - dy/da = g'(x) * a'(x)
+        - dy/dx = g'(a(x)) * a'(x)
         """
         return self.f_prime(self.inputs) * grad
 
