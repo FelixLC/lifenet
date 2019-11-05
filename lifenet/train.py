@@ -27,8 +27,6 @@ def train(net: NeuralNet,
     We usually loop many times over the data to let the model learn the right amount
     of knowledge.
     """
-    losses = []
-    
     for epoch in range(num_epochs):
         epoch_loss = 0.0
         for batch in iterator(inputs, targets):
@@ -38,9 +36,5 @@ def train(net: NeuralNet,
             net.backward(grad)
             optimizer.step(net)
 
-            losses.append(epoch_loss)
-
         if epoch % 10 == 0:
             print(f"Epoch {epoch} - Loss {epoch_loss}")
-    
-    return losses
