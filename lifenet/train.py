@@ -2,11 +2,11 @@
 Here's a function that can train a neural net
 """
 
-from lifenet.tensor import Tensor
-from lifenet.nn import NeuralNet
-from lifenet.loss import Loss, MSE
-from lifenet.optim import Optimizer, SGD
 from lifenet.data import BatchIterator
+from lifenet.loss import MSE, Loss
+from lifenet.nn import NeuralNet
+from lifenet.optim import SGD, Optimizer
+from lifenet.tensor import Tensor
 
 
 def train(net: NeuralNet,
@@ -27,6 +27,8 @@ def train(net: NeuralNet,
     We usually loop many times over the data to let the model learn the right amount
     of knowledge.
     """
+    losses = []
+    
     for epoch in range(num_epochs):
         epoch_loss = 0.0
         for batch in iterator(inputs, targets):
@@ -36,5 +38,9 @@ def train(net: NeuralNet,
             net.backward(grad)
             optimizer.step(net)
 
+            losses.append(epoch_loss)
+
         if epoch % 10 == 0:
             print(f"Epoch {epoch} - Loss {epoch_loss}")
+    
+    return losses
